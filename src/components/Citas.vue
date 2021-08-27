@@ -1,143 +1,247 @@
 <template>
   <section class="section1">
-      <h1 class="title">ADMINISTRADOR DE PACIENTES DE VETERINARIA</h1>
-        <form id="nueva-cita" class="form" action="">
-            <div class="datos">
-                <h2 class="title">Datos del paciente</h2>
-                <div class="group-input">
-                    <label class="label" for="mascota">Nombre de mascota: </label>
-                    <input v-model="mascota" value="" id="mascota" name="mascota"
-                    placeholder="Nombre de mascota" 
-                    class="input" type="text">
-                </div>
-                <div class="group-input">
-                    <label class="label" for="especie">Especie: </label>
-                    <select v-model="especie" id="especie" class="input" name="especie">
-                        <option class="option" value="perro">Perro</option>
-                        <option class="option" value="gato">Gato</option>
-                    </select>
-                </div>
-                <div class="group-input">
-                    <label class="label" for="propietario">Propietario: </label>
-                    <input v-model="propietario" id="propietario" placeholder="Nombre del propietario" 
-                    class="input" type="text" name="propietario">
-                </div>
-                <div class="group-input">
-                    <label class="label" for="telefono">Telefono: </label>
-                    <input v-model="telefono" id="telefono" placeholder="Número de télefono" 
-                    class="input" type="text" name="telefono">
-                </div>
-                <div class="group-input">
-                    <label class="label" for="fecha">Fecha: </label>
-                    <input v-model="fecha" id="fecha" class="input" name="fecha" type="date">
-                </div>
-                <div class="group-input">
-                    <label class="label" for="hora">Hora: </label>
-                    <input v-model="hora" id="hora" name="hora" class="input" type="time">
-                </div>
-                <div class="group-input">
-                    <label class="label" for="descripcion">Descripción: </label>
-                    <textarea v-model="descripcion" class="textarea" 
-                    name="descripcion" id="descripcion" cols="30" 
-                    placeholder="Motivo por el cual se agenda la cita" rows="7"></textarea>
-                </div>
-                <div class="group-input">
-                    <p @click="crearCita()" id="crear" class="button">
-                        CREAR CITA
-                    </p>
-                </div>
-            </div>
-            <div id="citas" class="citas">
-                <h2 class="title">Citas</h2>
-                <div v-for="cita of citas" :key="cita._id" class="cita">
-                    <h3 class="data-mascota">{{ cita.mascota }}</h3>
-                    <div class="data">
-                        <p>Especie: <span class="data-especie">{{cita.especie}}</span></p>
-                        <p>Propietario: <span class="data-propietario">{{cita.propietario}}</span></p>
-                        <p>Telefono: <span class="data-telefono">{{cita.telefono}}</span></p>
-                        <p>Fecha: <span class="data-fecha">{{cita.fecha}}</span></p>
-                        <p>Hora: <span class="data-hora">{{cita.hora}}</span></p>
-                        <p>Descripcion: <span class="data-descripcion">{{cita.telefono}}</span></p>
-                    </div>     
-                    <div class="botones">
-                        <p @click="editarCita(cita._id)" class="editar">
-                            Editar
-                        </p>
-                        <p @click="eliminarCita(cita._id)" class="eliminar">
-                            Eliminar
-                        </p>
-                    </div>               
-                </div>
-            </div>
-        </form>
+    <h1 class="title">ADMINISTRADOR DE PACIENTES DE VETERINARIA</h1>
+    <form id="nueva-cita" class="form" action="">
+      <div class="datos">
+        <h2 class="title">Datos del paciente</h2>
+        <div class="group-input">
+          <label class="label" for="mascota">Nombre de mascota: </label>
+          <input
+            v-model="mascota"
+            value=""
+            id="mascota"
+            name="mascota"
+            placeholder="Nombre de mascota"
+            class="input"
+            type="text"
+          />
+        </div>
+        <div class="group-input">
+          <label class="label" for="especie">Especie: </label>
+          <select v-model="especie" id="especie" class="input" name="especie">
+            <option class="option" value="perro">Perro</option>
+            <option class="option" value="gato">Gato</option>
+          </select>
+        </div>
+        <div class="group-input">
+          <label class="label" for="propietario">Propietario: </label>
+          <input
+            v-model="propietario"
+            id="propietario"
+            placeholder="Nombre del propietario"
+            class="input"
+            type="text"
+            name="propietario"
+          />
+        </div>
+        <div class="group-input">
+          <label class="label" for="telefono">Telefono: </label>
+          <input
+            v-model="telefono"
+            id="telefono"
+            placeholder="Número de télefono"
+            class="input"
+            type="text"
+            name="telefono"
+          />
+        </div>
+        <div class="group-input">
+          <label class="label" for="fecha">Fecha: </label>
+          <input
+            v-model="fecha"
+            id="fecha"
+            class="input"
+            name="fecha"
+            type="date"
+          />
+        </div>
+        <div class="group-input">
+          <label class="label" for="hora">Hora: </label>
+          <input
+            v-model="hora"
+            id="hora"
+            name="hora"
+            class="input"
+            type="time"
+          />
+        </div>
+        <div class="group-input">
+          <label class="label" for="descripcion">Descripción: </label>
+          <textarea
+            v-model="descripcion"
+            class="textarea"
+            name="descripcion"
+            id="descripcion"
+            cols="30"
+            placeholder="Motivo por el cual se agenda la cita"
+            rows="7"
+          ></textarea>
+        </div>
+        <div class="group-input">
+          <p @click="limpiarCampos()" id="crear" class="button">
+            Limpiar campos
+          </p>
+          <p @click="guardar()" id="crear" class="button">Guardar cita</p>
+        </div>
+      </div>
+      <div id="citas" class="citas">
+        <h2 class="title">Citas</h2>
+        <div v-for="cita of citas" :key="cita._id" class="cita">
+          <h3 class="data-mascota">{{ cita.mascota }}</h3>
+          <div class="data">
+            <p>
+              Especie: <span class="data-especie">{{ cita.especie }}</span>
+            </p>
+            <p>
+              Propietario:
+              <span class="data-propietario">{{ cita.propietario }}</span>
+            </p>
+            <p>
+              Telefono: <span class="data-telefono">{{ cita.telefono }}</span>
+            </p>
+            <p>
+              Fecha: <span class="data-fecha">{{ cita.fecha }}</span>
+            </p>
+            <p>
+              Hora: <span class="data-hora">{{ cita.hora }}</span>
+            </p>
+            <p>
+              Descripcion:
+              <span class="data-descripcion">{{ cita.descripcion }}</span>
+            </p>
+          </div>
+          <div class="botones">
+            <p @click="editarCita(cita._id)" class="editar">Editar</p>
+            <p @click="eliminarCita(cita._id)" class="eliminar">Eliminar</p>
+          </div>
+        </div>
+      </div>
+    </form>
   </section>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
-    data(){
-        return {
-            mascota:'',
-            especie:'',
-            propietario:'',
-            telefono:'',
-            fecha:'',
-            hora:'',
-            descripcion:'',
-            citas:[]
-        }
-    },
-    methods:{
-        crearCita(){
-            axios
-            .post('cita/add',{
-                mascota:this.mascota,
-                especie:this.especie,
-                propietario:this.propietario,
-                telefono:this.telefono,
-                fecha:this.fecha,
-                hora:this.hora,
-                descripcion:this.descripcion
-            })
-            .then(response=>{
-                console.log(`
+  data() {
+    return {
+      id: "",
+      mascota: "",
+      especie: "",
+      propietario: "",
+      telefono: "",
+      fecha: "",
+      hora: "",
+      descripcion: "",
+      citas: [],
+      isEditar: false,
+    };
+  },
+  methods: {
+    crearCita() {
+      axios
+        .post("cita/add", {
+          mascota: this.mascota,
+          especie: this.especie,
+          propietario: this.propietario,
+          telefono: this.telefono,
+          fecha: this.fecha,
+          hora: this.hora,
+          descripcion: this.descripcion,
+        })
+        .then((response) => {
+          console.log(`
                 cita agregada exitosamente 
                 Mascota: ${response.data.mascota} 
                 Dueño: ${response.data.propietario}`);
-            })
-            .catch(error=>{
-                console.log(error);
-                alert('no se pudo agendar la cita');
-            });
-            this.listarCitas();
-        },
-        listarCitas(){
-            axios.get('cita/list')
-            .then((response)=>{
-                this.citas = response.data;
-            }).catch((error)=>{
-                console.log(error);
-            });
-        },
-        editarCita(_id){
-            console.log(_id);
-            
-        },
-        eliminarCita(_id){
-            axios.delete(`cita/remove`, {data:{_id:_id}})
-            .then((response)=>{
-                console.log("Cita eliminada: " +  response.data.mascota);
-            }).catch((error)=>{
-                console.log(error);
-            });
-            this.listarCitas();
-        },
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("no se pudo agendar la cita");
+        });
+      this.listarCitas();
     },
-    created(){
-       this.listarCitas();
-    }
-
+    listarCitas() {
+      axios
+        .get("cita/list")
+        .then((response) => {
+          this.citas = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    editarCita(_id) {
+      console.log(_id);
+      axios
+        .get("cita/query?_id=" + _id)
+        .then((response) => {
+          this._id = _id;
+          this.mascota = response.data.mascota;
+          this.especie = response.data.especie;
+          this.propietario = response.data.propietario;
+          this.telefono = response.data.telefono;
+          this.fecha = response.data.fecha;
+          this.hora = response.data.hora;
+          this.descripcion = response.data.descripcion;
+          this.isEditar = true;
+        })
+        .catch((error) => {
+          console.log(
+            `Error al obtener los datos de la mascota error ${error}`
+          );
+        });
+    },
+    eliminarCita(_id) {
+      axios
+        .delete(`cita/remove`, { data: { _id: _id } })
+        .then((response) => {
+          console.log("Cita eliminada: " + response.data.mascota);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.listarCitas();
+    },
+    update() {
+      axios
+        .put(`cita/update`, {
+          _id: this._id,
+          mascota: this.mascota,
+          especie: this.especie,
+          propietario: this.propietario,
+          telefono: this.telefono,
+          fecha: this.fecha,
+          hora: this.hora,
+          descripcion: this.descripcion,
+        })
+        .then((response) => {
+          console.log(
+            `Cita actualizada exitosamente: ${response.data.mascota}`
+          );
+        })
+        .catch((error) => {
+          console.log(`No se pudo actualizar la cita: ${error}`);
+        });
+      this.listarCitas();
+    },
+    limpiarCampos() {
+      this.mascota = "";
+      this.especie = "";
+      this.propietario = "";
+      this.telefono = "";
+      this.fecha = "";
+      this.hora = "";
+      this.descripcion = "";
+      this.isEditar = false;
+    },
+    guardar() {
+      this.isEditar ? this.update() : this.crearCita();
+    },
+  },
+  created() {
+    this.listarCitas();
+  },
 };
 </script>
 
@@ -267,7 +371,7 @@ export default {
                     align-content: space-evenly
                     .editar, .eliminar
                         display: flex
-                        justify-content: center 
+                        justify-content: center
                         align-items: center
                         padding: auto
                         width: 100%
@@ -285,7 +389,7 @@ export default {
                         background: #2aa7b0cb
                     .eliminar
                         background: #de457abf
-                        
+
 
 @media screen and (max-width: 800px)
     .section1
@@ -293,5 +397,5 @@ export default {
             .datos
                 width: 100%
             .citas
-                width: 100%                
+                width: 100%
 </style>
