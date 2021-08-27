@@ -5,7 +5,7 @@ import "./registerServiceWorker";
 import router from "./router";
 
 Vue.config.productionTip = false;
-axios.defaults.baseURL='https://warm-island-73911.herokuapp.com/api/';
+axios.defaults.baseURL="https://warm-island-73911.herokuapp.com/api/";
 
 new Vue({
   router,
